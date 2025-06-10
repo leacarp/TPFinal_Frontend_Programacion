@@ -45,8 +45,3 @@ const altaCliente = async () => {
     }
 }
 </script>
-
-<style scoped>
-/* Contenedor principal */
-
-</style>

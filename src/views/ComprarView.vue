@@ -39,7 +39,7 @@ const { obtenerClientes } = useCliente();
 const { cargarMovimiento, obtenerMovimientos } = useMovimiento();
 const router = useRouter();
 const clientes = ref([]);
-const criptosDisponibles = [{ label: 'BTC', value: 'btc' }, { label: 'ETH', value: 'eth' }, { label: 'USDT', value: 'usdt' }]
+const criptosDisponibles = [{ label: 'BTC', value: 'btc' }, { label: 'ETH', value: 'eth' }, { label: 'USDT', value: 'usdt' }, {label: 'USDC', value: 'usdc'}, {  label: 'SOL', value: 'sol'}, { label: 'AVAX', value: 'avax'}, { label: 'DOT', value: 'dot'}]
 
 const movimiento = ref({
     cryptocode: '',

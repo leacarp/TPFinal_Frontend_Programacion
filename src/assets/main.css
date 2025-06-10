@@ -7,7 +7,15 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Título de la página */
+.page-container-movimiento {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
 .page-title {
     text-align: center;
     color: #1a1a2e;
@@ -16,7 +24,6 @@
     font-weight: bold;
 }
 
-/* Contenedor del formulario */
 .form-container {
     display: flex;
     flex-direction: column;
@@ -24,13 +31,11 @@
     margin-bottom: 2rem;
 }
 
-/* Grupo de input */
 .input-group {
     display: flex;
     flex-direction: column;
 }
 
-/* Etiquetas */
 .form-label {
     color: #1a1a2e;
     font-weight: 600;
@@ -38,7 +43,6 @@
     font-size: 1rem;
 }
 
-/* Inputs */
 .form-control {
     padding: 0.75rem;
     border: 2px solid #dee2e6;
@@ -59,7 +63,6 @@
     border-color: #00d4ff;
 }
 
-/* Botón principal */
 .btn-guardar {
     background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
     color: white;
@@ -83,7 +86,6 @@
     transform: translateY(0);
 }
 
-/* Botón secundario */
 .btn-secundario {
     background: transparent;
     color: #1a1a2e;
@@ -105,7 +107,74 @@
     transform: translateY(-2px);
 }
 
-/* Responsive */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+}
+
+.movimientos-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.movimientos-table th {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.movimientos-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #1a1a2e;
+}
+
+.movimientos-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.movimientos-table tbody tr:hover {
+    background-color: rgba(0, 212, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.no-data {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.btn-recargar {
+    background: transparent;
+    color: #1a1a2e;
+    border: 2px solid #1a1a2e;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-recargar:hover {
+    background-color: #1a1a2e;
+    color: white;
+    transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
     .page-container {
         margin: 1rem;
@@ -123,5 +192,19 @@
     .btn-guardar, .btn-secundario {
         padding: 0.6rem 1rem;
         font-size: 0.9rem;
+    }
+
+    .page-container-movimiento {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    .movimientos-table th,
+    .movimientos-table td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .movimientos-table th {
+        font-size: 0.75rem;
     }
 }
