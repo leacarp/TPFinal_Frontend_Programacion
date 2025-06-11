@@ -12,7 +12,6 @@
             </div>
             <button type="submit" class="btn-guardar">Guardar Cliente</button>
         </form>
-        <button @click="mostrarClientes" class="btn-secundario">Mostrar Clientes</button>
     </div>
 </template>
 
@@ -21,18 +20,13 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCliente } from '../composables/ClienteComposable';
 
-const { guardarCliente, obtenerClientes } = useCliente();
+const { guardarCliente } = useCliente();
 const router = useRouter();
 
 const cliente = ref({
     nombre: '',
     email: ''
 })
-
-const mostrarClientes = async () => {
-    const res = await obtenerClientes();
-    console.log(res);
-}
 
 const altaCliente = async () => {
     try {
