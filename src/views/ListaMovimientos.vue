@@ -2,12 +2,10 @@
     <div class="page-container-movimiento">
         <h1 class="page-title">Lista de Movimientos</h1>
         
-        <!-- Mensaje cuando no hay datos -->
         <div v-if="movimientos.length === 0" class="no-data">
             <p>No hay movimientos registrados</p>
         </div>
         
-        <!-- Tabla de movimientos -->
         <div v-else class="table-container">
             <table class="movimientos-table">
                 <thead>
@@ -16,6 +14,7 @@
                         <th>Cantidad de cripto</th>
                         <th>Fecha y hora</th>
                         <th>Cantidad en pesos</th>
+                        <th>Cliente</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,12 +23,12 @@
                         <td>{{ movimiento.cryptoAmount }}</td>
                         <td>{{ formatearFecha(movimiento.dateTime) }}</td>
                         <td>{{ movimiento.pesos }}</td>
+                        <td>{{ movimiento.cliente }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         
-        <!-- Botón para recargar datos -->
         <button @click="cargarMovimientos" class="btn-recargar">Recargar Datos</button>
     </div>
 </template>
@@ -44,21 +43,17 @@ const { formatearFecha } = useUtils();
 const movimientos = ref([]);
 
 
-// Función para cargar movimientos
 const cargarMovimientos = async () => {
     try {
         console.log('Cargando movimientos...');
         const res = await obtenerMovimientos();
         console.log('Respuesta recibida:', res);
         
-        // Limpiar el array primero
         movimientos.value = [];
         
-        // Verificar si la respuesta es un array
         if (Array.isArray(res)) {
             movimientos.value = res;
         } else if (res && Array.isArray(res.data)) {
-            // Si la respuesta viene en un objeto con propiedad 'data'
             movimientos.value = res.data;
         } else {
             console.error('La respuesta no es un array:', res);

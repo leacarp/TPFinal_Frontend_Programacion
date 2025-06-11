@@ -14,7 +14,7 @@
             </div>
             <div class="input-group">
                 <label class="form-label">Cantidad de cripto</label>
-                <input type="number" class="form-control" v-model="movimiento.cryptoamount" required placeholder="Cantidad de cripto" min="1">
+                <input type="number" class="form-control" v-model="movimiento.cryptoamount" required placeholder="Cantidad de cripto">
             </div>
             <div class="input-group">
                 <label class="form-label">Nombre del cliente</label>
