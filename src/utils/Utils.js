@@ -4,5 +4,11 @@ export const useUtils = () => {
         return new Date(fecha).toLocaleString('es-ES');
     };
 
-    return { formatearFecha };
+    const formatAction = (action) => {
+        if (action === 'purchase') return 'Compra';
+        if (action === 'sale') return 'Venta';
+        return action;
+    }
+
+    return { formatearFecha, formatAction };
 }

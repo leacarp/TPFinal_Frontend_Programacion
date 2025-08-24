@@ -1,6 +1,6 @@
 <template>
     <div class="page-container">
-        <h1 class="page-title">Alta de Movimiento</h1>
+        <h1 class="page-title">Compra de cripto</h1>
         <form @submit.prevent="altaMovimiento" class="form-container">
             <div class="input-group">
                 <label class="form-label">Código de cripto</label>
@@ -9,24 +9,19 @@
                 </select>
             </div>
             <div class="input-group">
-                <label class="form-label">Acción</label>
-                <input type="text" class="form-control" v-model="movimiento.action" required placeholder="Acción a realizar">
-            </div>
-            <div class="input-group">
                 <label class="form-label">Cantidad de cripto</label>
-                <input type="number" class="form-control" v-model="movimiento.cryptoamount" required placeholder="Cantidad de cripto">
+                <input type="number" step="any" class="form-control" v-model="movimiento.cryptoamount" required placeholder="Cantidad de cripto">
             </div>
             <div class="input-group">
                 <label class="form-label">Nombre del cliente</label>
-                <select name="" id="" class="form-control" v-model="movimiento.clienteid" required placeholder="Nombre de cliente">
+                <select class="form-control" v-model="movimiento.clienteid" required placeholder="Nombre de cliente">
                     <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nombre }}</option>
                 </select>
             </div>
-            <button type="submit" class="btn-guardar">Guardar Movimiento</button>
+            <button type="submit" class="btn-guardar">Realizar Compra</button>
             <button @click="mostrarMovimientos" class="btn-secundario">Mostrar Movimientos</button>
         </form>
     </div>
-
 </template>
 
 <script setup>
@@ -36,14 +31,14 @@ import { useMovimiento } from '../composables/MovimientoComposable';
 import { useCliente } from '../composables/ClienteComposable';
 
 const { obtenerClientes } = useCliente();
-const { cargarMovimiento, obtenerMovimientos } = useMovimiento();
+const { cargarMovimiento } = useMovimiento();
 const router = useRouter();
 const clientes = ref([]);
 const criptosDisponibles = [{ label: 'BTC', value: 'btc' }, { label: 'ETH', value: 'eth' }, { label: 'USDT', value: 'usdt' }, {label: 'USDC', value: 'usdc'}, {  label: 'SOL', value: 'sol'}, { label: 'AVAX', value: 'avax'}, { label: 'DOT', value: 'dot'}]
 
 const movimiento = ref({
     cryptocode: '',
-    action: '',
+    action: 'purchase',
     cryptoamount: null,
     datetime: new Date().toISOString(),
     clienteid: null
@@ -63,6 +58,7 @@ const altaMovimiento = async () => {
         alert('Movimiento creado correctamente');
         movimiento.value = { cryptocode: '', action: '', cryptoamount: null, datetime: null, clienteid: null };
     } catch (error) {
+        alert('Error al realizar la compra')
         console.log(error);
     }
 }

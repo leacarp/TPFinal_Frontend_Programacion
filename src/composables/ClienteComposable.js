@@ -9,6 +9,7 @@ export const useCliente = () => {
             return res.data;
         } catch (error) {
             console.log('Error al guardar el cliente', error);
+            throw error;
         }
     }
 
@@ -19,8 +20,31 @@ export const useCliente = () => {
             return res.data;
         } catch (error) {
             console.log('Error al obtener los clientes', error);
+            throw error;
         }
     }
 
-    return { guardarCliente, obtenerClientes };
+    const editarCliente = async (id, cliente) => {
+        try {
+            const res = await axios.put(`https://localhost:7063/api/cliente/${id}`, cliente);
+            console.log('Cliente editado correctamente', res);
+            return res.data;
+        } catch (error) {
+            console.log('Error al editar el cliente', error);
+            throw error;
+        }
+    }
+
+    const eliminarCliente = async (id) => {
+        try {
+            const res = await axios.delete(`https://localhost:7063/api/cliente/${id}`);
+            console.log('Cliente eliminado correctamente', res);
+            return res.data;
+        } catch (error) {
+            console.log('Error al eliminar el cliente', error);
+            throw error;
+        }
+    }
+
+    return { guardarCliente, obtenerClientes, editarCliente, eliminarCliente };
 }
