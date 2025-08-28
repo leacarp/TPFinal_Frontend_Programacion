@@ -95,7 +95,7 @@ const guardarCliente = async () => {
             await editarClienteAPI(cliente.value.id, cliente.value);
             alert('Cliente actualizado correctamente');
         } else {
-            await guardarClienteAPI(cliente.value);
+            await guardarClienteAPI({ nombre: cliente.value.nombre, email: cliente.value.email });
             alert('Cliente creado correctamente');
         }
         

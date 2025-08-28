@@ -24,6 +24,17 @@ export const useMovimiento = () => {
         }
     }
 
+    const obtenerMovimientosPorCliente = async (clienteId) => {
+        try {
+            const res = await axios.get(`https://localhost:7063/api/movimiento/cliente/${clienteId}`);
+            console.log('Movimientos obtenidos correctamente', res.data);
+            return res.data;
+        } catch (error) {
+            console.log('Error al obtener los movimientos por cliente', error);
+            throw error;
+        }
+    }
+
     const editarMovimiento = async (id, movimiento) => {
         try {
             const res = await axios.put(`https://localhost:7063/api/movimiento/${id}`, movimiento);
@@ -46,5 +57,5 @@ export const useMovimiento = () => {
         }
     }
 
-    return { cargarMovimiento, obtenerMovimientos, editarMovimiento, eliminarMovimiento };
+    return { cargarMovimiento, obtenerMovimientos, obtenerMovimientosPorCliente, editarMovimiento, eliminarMovimiento };
 }

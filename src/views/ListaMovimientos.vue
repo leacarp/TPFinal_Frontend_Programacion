@@ -2,7 +2,19 @@
     <div class="page-container-movimiento">
         <h1 class="page-title">Lista de Movimientos</h1>
         
-        <div v-if="movimientos.length === 0" class="no-data">
+        <!-- Filtro por cliente -->
+        <div class="filter-section">
+            <label class="filter-label">Filtrar por cliente:</label>
+            <select v-model="clienteSeleccionado" @change="filtrarMovimientos" class="filter-select">
+                <option value="">Todos los clientes</option>
+                <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.nombre">
+                    {{ cliente.nombre }}
+                </option>
+            </select>
+            <button v-if="clienteSeleccionado" @click="limpiarFiltro" class="btn-limpiar">Limpiar filtro</button>
+        </div>
+        
+        <div v-if="movimientosFiltrados.length === 0" class="no-data">
             <p>No hay movimientos registrados</p>
         </div>
         
@@ -20,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="movimiento in movimientos" :key="movimiento.id">
+                    <tr v-for="movimiento in movimientosFiltrados" :key="movimiento.id">
                         <td>{{ movimiento.cryptoCode.toUpperCase() }}</td>
                         <td>{{ movimiento.cryptoAmount }}</td>
                         <td>{{ formatearFecha(movimiento.dateTime) }}</td>
@@ -59,13 +71,14 @@
                         <input v-model="movimientoEdit.cryptoAmount" type="number" step="0.00000001" required>
                     </div>
                     <div class="form-group">
-                        <label>Pesos:</label>
-                        <input v-model="movimientoEdit.pesos" type="number" step="0.01" required>
+                        <label>Cliente:</label>
+                        <select v-model="movimientoEdit.clienteId" required>
+                            <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">
+                            {{ cliente.nombre }}
+                            </option>
+                        </select>
                     </div>
-                    <div class="form-group">
-                        <label>Fecha y Hora:</label>
-                        <input v-model="movimientoEdit.dateTime" type="datetime-local" required>
-                    </div>
+                    
                     <div class="modal-buttons">
                         <button type="submit" class="btn-guardar">Guardar</button>
                         <button type="button" @click="closeModal" class="btn-cancelar">Cancelar</button>
@@ -79,13 +92,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useMovimiento } from '../composables/MovimientoComposable';
+import { useCliente } from '../composables/ClienteComposable';
 import { useUtils } from '../utils/Utils';
 
 const { obtenerMovimientos, editarMovimiento: editarMovimientoAPI, eliminarMovimiento } = useMovimiento();
+const { obtenerClientes } = useCliente();
 const { formatearFecha, formatAction } = useUtils();
 const movimientos = ref([]);
+const clientes = ref([]);
 const showEditModal = ref(false);
 const movimientoEdit = ref({});
+const clienteSeleccionado = ref('');
+const movimientosFiltrados = ref([]);
 
 const cargarMovimientos = async () => {
     try {
@@ -104,6 +122,7 @@ const cargarMovimientos = async () => {
         }
         
         console.log('Movimientos cargados:', movimientos.value);
+        movimientosFiltrados.value = movimientos.value;
     } catch (error) {
         console.error('Error al cargar movimientos:', error);
     }
@@ -117,7 +136,7 @@ const editarMovimiento = (movimiento) => {
         cryptoAmount: movimiento.cryptoAmount,
         pesos: movimiento.pesos,
         dateTime: new Date(movimiento.dateTime).toISOString().slice(0, 16),
-        clienteId: movimiento.clienteId
+        clienteId: clientes.value.find(c => c.nombre === movimiento.cliente)?.id
     };
     showEditModal.value = true;
 };
@@ -156,12 +175,74 @@ const closeModal = () => {
     movimientoEdit.value = {};
 };
 
+const handleClientes = async () => {
+    const res = await obtenerClientes();
+    clientes.value = res;
+};
+
+const filtrarMovimientos = () => {
+    if (clienteSeleccionado.value === '') {
+        movimientosFiltrados.value = movimientos.value;
+    } else {
+        movimientosFiltrados.value = movimientos.value.filter(mov => mov.cliente === clienteSeleccionado.value);
+    }
+};
+
+const limpiarFiltro = () => {
+    clienteSeleccionado.value = '';
+    movimientosFiltrados.value = movimientos.value;
+};
+
 onMounted(() => {
     cargarMovimientos();
+    handleClientes();
 });
 </script>
 
 <style scoped>
+.filter-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 200px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.btn-limpiar {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-limpiar:hover {
+    background-color: #5a6268;
+}
+
 .actions-cell {
     display: flex;
     gap: 8px;

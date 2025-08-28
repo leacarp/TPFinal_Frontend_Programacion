@@ -55,10 +55,12 @@ const altaMovimiento = async () => {
             return;
         }
         await cargarMovimiento(movimiento.value);
-        alert('Movimiento creado correctamente');
+        alert(`Venta realizada correctamente: 
+        Cantidad: ${movimiento.value.cryptoamount}
+        Cripto: ${movimiento.value.cryptocode.toUpperCase()}` );
         movimiento.value = { cryptocode: '', action: '', cryptoamount: null, datetime: null, clienteid: null };
     } catch (error) {
-        alert('Error al realizar la venta');
+        alert(error);
         console.log(error);
     }
 }

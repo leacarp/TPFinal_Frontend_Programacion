@@ -1,9 +1,5 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="page-container">
+    <h1>Bienvenido a la página de inicio</h1>
+  </div>
 </template>
