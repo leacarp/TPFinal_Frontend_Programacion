@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group">
                         <label>Cantidad de Cripto:</label>
-                        <input v-model="movimientoEdit.cryptoAmount" type="number" step="0.00000001" required>
+                        <input v-model="movimientoEdit.cryptoAmount" type="number" step="any" required>
                     </div>
                     <div class="form-group">
                         <label>Cliente:</label>
