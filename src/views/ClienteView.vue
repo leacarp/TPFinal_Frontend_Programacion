@@ -37,7 +37,6 @@
                 <table class="clientes-table">
                     <thead>
                         <tr>
-                            <!-- <th>ID</th> -->
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Movimientos</th>
@@ -46,7 +45,6 @@
                     </thead>
                     <tbody>
                         <tr v-for="cliente in clientes" :key="cliente.id">
-                            <!-- <td>{{ cliente.id }}</td> -->
                             <td>{{ cliente.nombre }}</td>
                             <td>{{ cliente.email }}</td>
                             <td>{{ cliente.movimientos ? cliente.movimientos.length : 0 }}</td>

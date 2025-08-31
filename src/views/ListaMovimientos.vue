@@ -107,9 +107,7 @@ const movimientosFiltrados = ref([]);
 
 const cargarMovimientos = async () => {
     try {
-        console.log('Cargando movimientos...');
         const res = await obtenerMovimientos();
-        console.log('Respuesta recibida:', res);
         
         movimientos.value = [];
         
@@ -121,7 +119,6 @@ const cargarMovimientos = async () => {
             console.error('La respuesta no es un array:', res);
         }
         
-        console.log('Movimientos cargados:', movimientos.value);
         movimientosFiltrados.value = movimientos.value;
     } catch (error) {
         console.error('Error al cargar movimientos:', error);
